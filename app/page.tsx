@@ -31,8 +31,8 @@ export default function AgentSecurityPortal() {
       severity: 'CRITICAL',
       defense: 'Cryptographic Context Delimiters + Dual-Boundary Validator',
       status: 'NEUTRALIZED',
-      log: '[GATEWAY] Detected 2 malicious tokens: [DROP DATABASE, attacker.com]
-[ARMOR] Deterministic boundary rejected prompt modification in 0.2ms.'
+      log: `[GATEWAY] Detected 2 malicious tokens: [DROP DATABASE, attacker.com]
+[ARMOR] Deterministic boundary rejected prompt modification in 0.2ms.`
     },
     indirect: {
       name: 'Indirect Data Poisoning (Web / PDF)',
@@ -42,8 +42,8 @@ export default function AgentSecurityPortal() {
       severity: 'HIGH',
       defense: 'Ephemeral Read-Only Subagent Sandbox',
       status: 'NEUTRALIZED',
-      log: '[SANDBOX] Web reader runs in isolated container with network egress restricted to read-only.
-[SECURITY] Payload quarantined in ephemeral workspace.'
+      log: `[SANDBOX] Web reader runs in isolated container with network egress restricted to read-only.
+[SECURITY] Payload quarantined in ephemeral workspace.`
     },
     tool: {
       name: 'Untrusted Tool & Function Hijacking',
@@ -53,8 +53,8 @@ export default function AgentSecurityPortal() {
       severity: 'CRITICAL',
       defense: 'Deterministic Tool Invariants & Mandatory Telegram Gatekeeper',
       status: 'NEUTRALIZED',
-      log: '[TOOL_GATEKEEPER] Shell execution command requires explicit biometric / Telegram confirmation.
-[DISPATCH] Execution halted: caller ID unauthorized.'
+      log: `[TOOL_GATEKEEPER] Shell execution command requires explicit biometric / Telegram confirmation.
+[DISPATCH] Execution halted: caller ID unauthorized.`
     },
     memory: {
       name: 'Persistent Vector Store Poisoning',
@@ -64,8 +64,8 @@ export default function AgentSecurityPortal() {
       severity: 'HIGH',
       defense: 'Cosine Semantic Anomaly Detection + Content Signing',
       status: 'NEUTRALIZED',
-      log: '[RAG_INSPECTOR] Semantic drift score 0.89 exceeds threshold (0.45).
-[MEMORY] Vector insertion discarded.'
+      log: `[RAG_INSPECTOR] Semantic drift score 0.89 exceeds threshold (0.45).
+[MEMORY] Vector insertion discarded.`
     }
   }
 
@@ -99,19 +99,19 @@ export default function AgentSecurityPortal() {
           <div className="flex items-center gap-4 text-sm font-medium">
             <button
               onClick={() => setActiveTab('sandbox')}
-              className={px-3 py-1.5 rounded-md transition-colors }
+              className={activeTab === 'sandbox' ? "px-3 py-1.5 rounded-md font-semibold bg-[#E8F0FE] text-[#1A73E8]" : "px-3 py-1.5 rounded-md text-[#5F6368] hover:text-[#202124]"}
             >
               Live Simulator
             </button>
             <button
               onClick={() => setActiveTab('owasp')}
-              className={px-3 py-1.5 rounded-md transition-colors }
+              className={activeTab === 'owasp' ? "px-3 py-1.5 rounded-md font-semibold bg-[#E8F0FE] text-[#1A73E8]" : "px-3 py-1.5 rounded-md text-[#5F6368] hover:text-[#202124]"}
             >
               OWASP Top 10
             </button>
             <button
               onClick={() => setActiveTab('code')}
-              className={px-3 py-1.5 rounded-md transition-colors }
+              className={activeTab === 'code' ? "px-3 py-1.5 rounded-md font-semibold bg-[#E8F0FE] text-[#1A73E8]" : "px-3 py-1.5 rounded-md text-[#5F6368] hover:text-[#202124]"}
             >
               Hardened Code
             </button>
@@ -185,7 +185,7 @@ export default function AgentSecurityPortal() {
                       setSelectedAttack(key)
                       setSimulationState('idle')
                     }}
-                    className={p-3 text-left rounded-lg border transition-all }
+                    className={selectedAttack === key ? "p-3 text-left rounded-lg border bg-[#E8F0FE] border-[#1A73E8] text-[#1A73E8] shadow-sm" : "p-3 text-left rounded-lg border bg-[#F8F9FA] border-[#E8EAED] text-[#5F6368] hover:bg-white"}
                   >
                     <div className="font-semibold text-xs mb-1 uppercase tracking-wider">
                       {attacks[key].owasp}
@@ -224,7 +224,7 @@ export default function AgentSecurityPortal() {
                       <ShieldCheck className="w-4 h-4" /> Deterministic Security Interceptor
                     </span>
                     <span
-                      className={	ext-xs font-semibold px-2 py-0.5 rounded }
+                      className={simulationState === 'blocked' ? "text-xs font-semibold px-2 py-0.5 rounded bg-[#E6F4EA] text-[#1E8E3E]" : simulationState === 'running' ? "text-xs font-semibold px-2 py-0.5 rounded bg-[#FEF7E0] text-[#F9AB00]" : "text-xs font-semibold px-2 py-0.5 rounded bg-[#F8F9FA] text-[#5F6368]"}
                     >
                       {simulationState === 'blocked'
                         ? 'NEUTRALIZED (0.2ms)'
@@ -237,8 +237,8 @@ export default function AgentSecurityPortal() {
                     {simulationState === 'blocked'
                       ? attacks[selectedAttack].log
                       : simulationState === 'running'
-                      ? '> Ingress token parsing initiated...
-> Cross-referencing OWASP policy invariants...'
+                      ? `> Ingress token parsing initiated...
+> Cross-referencing OWASP policy invariants...`
                       : '> Click "Simulate Attack" to inspect defense telemetry.'}
                   </div>
                   <div className="mt-3 text-xs text-[#5F6368]">
@@ -348,7 +348,7 @@ export default function AgentSecurityPortal() {
             </div>
 
             <pre className="p-5 bg-[#202124] text-slate-100 rounded-xl text-xs font-mono overflow-x-auto leading-relaxed">
-{# 🛡️ Deterministic Security Armor & Invariant Boundary
+{`# 🛡️ Deterministic Security Armor & Invariant Boundary
 def dispatch_autonomous_tool(tool_name: str, args: dict, caller_id: str) -> dict:
     """
     INVARIANT 1: Path Traversal Defeated programmatically.
@@ -370,7 +370,7 @@ def dispatch_autonomous_tool(tool_name: str, args: dict, caller_id: str) -> dict
         stage_for_telegram_approval(tool_name, args)
         return {"success": True, "status": "STAGED_FOR_APPROVAL"}
 
-    return execute_sandboxed_tool(tool_name, args)}
+    return execute_sandboxed_tool(tool_name, args)`}
             </pre>
           </div>
         )}
